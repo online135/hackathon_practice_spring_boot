@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import java.util.Map;
 @RequestMapping("/api/data")
 public class DataController {
 	
+    @CrossOrigin(origins = "*") // You can specify allowed origins here
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> getData() {
         List<Map<String, Object>> data = new ArrayList<>();
