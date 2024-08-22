@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api/data")
+@CrossOrigin(origins = "*")
 public class DataController {
 	
-    @CrossOrigin(origins = "*")
     @GetMapping
+    @RequestMapping("/api/data")
     public ResponseEntity<List<Map<String, Object>>> getData() {
         List<Map<String, Object>> data = new ArrayList<>();
 
@@ -44,20 +44,16 @@ public class DataController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
-    @PostMapping
-    public ResponseEntity<String> postData(
-        @RequestParam("title") String title,
-        @RequestParam("description") String description,
-        @RequestParam(value = "file", required = false) MultipartFile file) 
-    {
+    @PostMapping("/api/data")
+    public ResponseEntity<String> postData(@RequestBody Map<String, Object> payload) {
+        // Process the incoming data
+        String selectedDate = (String) payload.get("selectedDate");
+        String description = (String) payload.get("description");
+        String selectedOption = (String) payload.get("selectedOption");
 
-        System.out.println("Received title: " + title);
+        System.out.println("Received date: " + selectedDate);
         System.out.println("Received description: " + description);
-
-        if (file != null) {
-            System.out.println("Received file: " + file.getOriginalFilename());
-        }
+        System.out.println("Received option: " + selectedOption);
 
         return new ResponseEntity<>("Data received successfully", HttpStatus.CREATED);
     }
