@@ -44,16 +44,18 @@ public class DataController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @PostMapping("/api/data")
+    @PostMapping("/api/issue")
     public ResponseEntity<String> postData(@RequestBody Map<String, Object> payload) {
         // Process the incoming data
+        String category = (String) payload.get("category");
+        String title = (String) payload.get("title");
         String selectedDate = (String) payload.get("selectedDate");
         String description = (String) payload.get("description");
-        String selectedOption = (String) payload.get("selectedOption");
 
-        System.out.println("Received date: " + selectedDate);
+        System.out.println("Received category: " + category);
+        System.out.println("Received title: " + title);
+        System.out.println("Received selectedDate: " + selectedDate);
         System.out.println("Received description: " + description);
-        System.out.println("Received option: " + selectedOption);
 
         return new ResponseEntity<>("Data received successfully", HttpStatus.CREATED);
     }
