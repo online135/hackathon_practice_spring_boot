@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping("/api/issues")
 public class DataController {
 	
     private List<Map<String, Object>> issueList = new ArrayList<>();
@@ -58,12 +59,11 @@ public class DataController {
     }
 
     @GetMapping
-    @RequestMapping("/api/issues")
     public ResponseEntity<List<Map<String, Object>>> getIssueList() {
         return new ResponseEntity<>(issueList, HttpStatus.OK);
     }
 
-    @GetMapping("/api/issue/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getDataById(@PathVariable("id") int id) {
         for (Map<String, Object> item : issueList) {
             if (item.get("id").equals(id)) {
@@ -73,19 +73,21 @@ public class DataController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/api/issue")
+    @PostMapping
     public ResponseEntity<String> postData(@RequestBody Map<String, Object> payload) {
         int nextId = issueList.isEmpty() ? 1 : issueList.stream()
         .mapToInt(item -> (int) item.get("id"))
         .max()
         .getAsInt() + 1;
 
+        // 給予 id 以及 狀態為 未處理
         payload.put("id", nextId);
+        payload.put("status", Status.UNPROCESSED);
         issueList.add(payload);
         return new ResponseEntity<>("Data received successfully", HttpStatus.CREATED);
     }
 
-    @PutMapping("/api/issue/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateData(@PathVariable("id") int id, @RequestBody Map<String, Object> payload) {
         for (Map<String, Object> item : issueList) {
             if (item.get("id").equals(id)) {
@@ -93,14 +95,13 @@ public class DataController {
                 item.put("title", payload.get("title"));
                 item.put("date", payload.get("date"));
                 item.put("description", payload.get("description"));
-                item.put("status", payload.get("status"));
                 return new ResponseEntity<>("Data updated successfully", HttpStatus.OK);
             }
         }
         return new ResponseEntity<>("Data not found", HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/api/issue/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteData(@PathVariable("id") int id) {
         for (Map<String, Object> item : issueList) {
             if (item.get("id").equals(id)) {
