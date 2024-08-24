@@ -2,7 +2,7 @@ package com.example.demo;
 
 public enum Status {
     UNPROCESSED("未處理通報"),
-    IN_PROGRESS("處理中"),
+    PROCESSING("處理中"),
     PROCESSED("處理完畢");
 
     private final String displayName;

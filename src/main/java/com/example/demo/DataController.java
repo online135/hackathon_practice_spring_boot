@@ -41,7 +41,7 @@ public class DataController {
         issue2.put("title", "TestTitle2");
         issue2.put("date", "2024-08-24");
         issue2.put("description", "This is the 2 item.");
-        issue2.put("status", Status.IN_PROGRESS);
+        issue2.put("status", Status.PROCESSING);
         issue2.put("id", 2);
 
         issueList.add(issue2);
