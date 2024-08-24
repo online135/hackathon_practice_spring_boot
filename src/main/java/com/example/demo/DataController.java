@@ -22,50 +22,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 @CrossOrigin(origins = "*")
 public class DataController {
 	
-    private List<Map<String, Object>> data = new ArrayList<>();
+    private List<Map<String, Object>> issueList = new ArrayList<>();
 
     public DataController() {
         // Sample data
-        Map<String, Object> item1 = new HashMap<>();
-        item1.put("category", Category.A);
-        item1.put("title", "TestTitle1");
-        item1.put("date", "2024-08-22");
-        item1.put("description", "This is the 1 item.");
-        item1.put("status", Status.A);
-        item1.put("id", 1);
+        Map<String, Object> issue1 = new HashMap<>();
+        issue1.put("category", Category.A);
+        issue1.put("title", "TestTitle1");
+        issue1.put("date", "2024-08-22");
+        issue1.put("description", "This is the 1 item.");
+        issue1.put("status", Status.A);
+        issue1.put("id", 1);
 
-        data.add(item1);
+        issueList.add(issue1);
 
-        Map<String, Object> item2 = new HashMap<>();
-        item2.put("category", Category.B);
-        item2.put("title", "TestTitle2");
-        item2.put("date", "2024-08-24");
-        item2.put("description", "This is the 2 item.");
-        item2.put("status", Status.B);
-        item2.put("id", 2);
+        Map<String, Object> issue2 = new HashMap<>();
+        issue2.put("category", Category.B);
+        issue2.put("title", "TestTitle2");
+        issue2.put("date", "2024-08-24");
+        issue2.put("description", "This is the 2 item.");
+        issue2.put("status", Status.B);
+        issue2.put("id", 2);
 
-        data.add(item2);
+        issueList.add(issue2);
 
-        Map<String, Object> item3 = new HashMap<>();
-        item3.put("category", Category.C);
-        item3.put("title", "TestTitle3");
-        item3.put("date", "2024-08-24");
-        item3.put("description", "This is the third item.");
-        item3.put("status", Status.C);
-        item3.put("id", 3);
+        Map<String, Object> issue3 = new HashMap<>();
+        issue3.put("category", Category.C);
+        issue3.put("title", "TestTitle3");
+        issue3.put("date", "2024-08-24");
+        issue3.put("description", "This is the third item.");
+        issue3.put("status", Status.C);
+        issue3.put("id", 3);
 
-        data.add(item3);
+        issueList.add(issue3);
     }
 
     @GetMapping
     @RequestMapping("/api/issues")
-    public ResponseEntity<List<Map<String, Object>>> getData() {
-        return new ResponseEntity<>(data, HttpStatus.OK);
+    public ResponseEntity<List<Map<String, Object>>> getIssueList() {
+        return new ResponseEntity<>(issueList, HttpStatus.OK);
     }
 
     @GetMapping("/api/issue/{id}")
     public ResponseEntity<Map<String, Object>> getDataById(@PathVariable("id") int id) {
-        for (Map<String, Object> item : data) {
+        for (Map<String, Object> item : issueList) {
             if (item.get("id").equals(id)) {
                 return new ResponseEntity<>(item, HttpStatus.OK);
             }
@@ -75,27 +75,19 @@ public class DataController {
 
     @PostMapping("/api/issue")
     public ResponseEntity<String> postData(@RequestBody Map<String, Object> payload) {
-        payload.put("id", data.size() + 1);
-        data.add(payload);
+        int nextId = issueList.isEmpty() ? 1 : issueList.stream()
+        .mapToInt(item -> (int) item.get("id"))
+        .max()
+        .getAsInt() + 1;
+
+        payload.put("id", nextId);
+        issueList.add(payload);
         return new ResponseEntity<>("Data received successfully", HttpStatus.CREATED);
-
-        // // Process the incoming data
-        // String category = (String) payload.get("category");
-        // String title = (String) payload.get("title");
-        // String selectedDate = (String) payload.get("selectedDate");
-        // String description = (String) payload.get("description");
-
-        // System.out.println("Received category: " + category);
-        // System.out.println("Received title: " + title);
-        // System.out.println("Received selectedDate: " + selectedDate);
-        // System.out.println("Received description: " + description);
-
-        // return new ResponseEntity<>("Data received successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("/api/issue/{id}")
     public ResponseEntity<String> updateData(@PathVariable("id") int id, @RequestBody Map<String, Object> payload) {
-        for (Map<String, Object> item : data) {
+        for (Map<String, Object> item : issueList) {
             if (item.get("id").equals(id)) {
                 item.put("category", payload.get("category"));
                 item.put("title", payload.get("title"));
@@ -110,9 +102,9 @@ public class DataController {
 
     @DeleteMapping("/api/issue/{id}")
     public ResponseEntity<String> deleteData(@PathVariable("id") int id) {
-        for (Map<String, Object> item : data) {
+        for (Map<String, Object> item : issueList) {
             if (item.get("id").equals(id)) {
-                data.remove(item);
+                issueList.remove(item);
                 return new ResponseEntity<>("Data deleted successfully", HttpStatus.OK);
             }
         }
