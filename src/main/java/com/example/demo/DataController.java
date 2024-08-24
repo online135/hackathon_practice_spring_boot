@@ -31,7 +31,7 @@ public class DataController {
         issue1.put("title", "TestTitle1");
         issue1.put("date", "2024-08-22");
         issue1.put("description", "This is the 1 item.");
-        issue1.put("status", Status.A);
+        issue1.put("status", Status.UNPROCESSED);
         issue1.put("id", 1);
 
         issueList.add(issue1);
@@ -41,7 +41,7 @@ public class DataController {
         issue2.put("title", "TestTitle2");
         issue2.put("date", "2024-08-24");
         issue2.put("description", "This is the 2 item.");
-        issue2.put("status", Status.B);
+        issue2.put("status", Status.IN_PROGRESS);
         issue2.put("id", 2);
 
         issueList.add(issue2);
@@ -51,7 +51,7 @@ public class DataController {
         issue3.put("title", "TestTitle3");
         issue3.put("date", "2024-08-24");
         issue3.put("description", "This is the third item.");
-        issue3.put("status", Status.C);
+        issue3.put("status", Status.PROCESSED);
         issue3.put("id", 3);
 
         issueList.add(issue3);
