@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.8</version>
+		<version>3.3.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -41,17 +41,20 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Spring Data JPA -->
+		<!-- 
+		版本問題導致無法使用 mysql-connector-java, 而要使用 mysql-connector-j
+
+		https://www.codejava.net/frameworks/spring-boot/mysql-connector-java-dependency-version-is-missing
+		-->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Database Driver (e.g., H2, MySQL, PostgreSQL) -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 	</dependencies>
 

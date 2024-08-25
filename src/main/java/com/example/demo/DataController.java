@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+// 通報列表
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/issues")

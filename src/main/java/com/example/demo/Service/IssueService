@@ -1,0 +1,16 @@
+package com.tutorial.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tutorial.Dao.MemberDao;
+import com.tutorial.Model.MemberAccount;
+
+@Service
+public class IssueService {
+	@Autowired
+	IssueDao issueDao;
+	public void addIssue (Issue issue){
+		issueDao.addMember(memberAccount);
+	}
+}
